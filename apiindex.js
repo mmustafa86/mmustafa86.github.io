@@ -1,5 +1,5 @@
                               
-                            
+     var movieData =[];                       
                             
 document.addEventListener(`DOMContentLoaded`, function() {              
 
@@ -27,40 +27,41 @@ document.addEventListener(`DOMContentLoaded`, function() {
       
       //content.innerHTML=renderMovie(movieData);
       
-    var searchString= $(".form-control search-bar");
-    var urlEncodedSearchString = encodeURIComponent(searchString);
+    var searchString= document.getElementById("search-bar").value
+     var urlEncodedSearchString = encodeURIComponent(searchString);
     
     axios.get("http://www.omdbapi.com/?apikey=3430a78&s="+urlEncodedSearchString)
     .then(function(response){
         console.log(response.data);
-        content.innerHTML=renderMovie(response.data.Search);
+        movieData=response.data.Search;
+      content.innerHTML=renderMovie(response.data.Search);
     
-        e.preventDefault()
+        e.preventDefault() //stop the submit the request form orginly to submit to not refursh the data 
+
     })
        
     }) 
     
     
-    
       })
-    function saveToWatchlist(imdbID){
+      function saveToWatchlist(imdbID){
         
-    var movie = Search.find(function(currentMovie){
-    console.log(movie);
-      return currentMovie.imdbID==imdbID;
-    
-    })
-    
-    var watchListJson = localStorage.getItem('watchlist')
-    var watchlist=JSON.parse(watchListJson);
-    
-    if(watchListJson===null){
-        var watchlist=[]
-    }
-    
-    watchlist.push(movie);
-     watchlistJSON = JSON.stringify(watchlist);
-     localStorage.setItem('watchlist', watchlistJSON);
-    console.log(watchlistJSON)
-    
-    }
+        var movie = movieData.find(function(currentMovie){
+        console.log(movie);
+          return currentMovie.imdbID==imdbID;
+        
+        })
+        
+        var watchListJson = localStorage.getItem('watchlist')
+        var watchlist=JSON.parse(watchListJson);
+        
+        if(watchListJson===null){
+            var watchlist=[]
+        }
+        
+        watchlist.push(movie);
+         watchlistJSON = JSON.stringify(watchlist);
+         localStorage.setItem('watchlist', watchlistJSON);
+        console.log(watchlistJSON)
+        
+        }
