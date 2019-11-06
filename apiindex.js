@@ -26,7 +26,7 @@ document.addEventListener(`DOMContentLoaded`, function() {
     document.getElementById('search-form').addEventListener('submit', function(e){
       
       //content.innerHTML=renderMovie(movieData);
-      
+      e.preventDefault() //stop the submit the request form orginly to submit to not refursh the data 
     var searchString= document.getElementById("search-bar").value
      var urlEncodedSearchString = encodeURIComponent(searchString);
     
@@ -36,7 +36,7 @@ document.addEventListener(`DOMContentLoaded`, function() {
         movieData=response.data.Search;
       content.innerHTML=renderMovie(response.data.Search);
     
-        e.preventDefault() //stop the submit the request form orginly to submit to not refursh the data 
+        
 
     })
        
